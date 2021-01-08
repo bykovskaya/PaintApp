@@ -15,6 +15,7 @@ public:
 	bool openImage(const QString& fileName);
 	bool saveImage(const QString& fileName);
 	bool isModified() const { return modified; }
+	~ScribbleArea();
 
 public slots:
 	void clearImg();
@@ -34,6 +35,7 @@ protected:
 private:
 	void drawShapes(const std::vector<BaseShape*>&);
 	void drawLines(const std::vector<SLine*>&);
+	void resizeImage(QImage* img, const QSize& newSize);
 
 	enum SHAPE_TYPE { CURSOR, LINE, RECT, ELLIPSE, TRIANGLE };
 	SHAPE_TYPE shType;
@@ -48,7 +50,6 @@ private:
 	QPoint* endPoint;
 	std::vector<QPoint*> points;
 	
-	void resizeImage(QImage* img, const QSize& newSize);
 	bool modified;
 	bool scribbling;
 	QColor penColor;

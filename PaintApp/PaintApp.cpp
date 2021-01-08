@@ -36,21 +36,9 @@ void PaintApp::open()
 
 void PaintApp::save()
 {
-	if (saveFile())
-	{
-		QMessageBox::StandardButton ret;
-		ret = QMessageBox::information(this, tr("Success!"),
-			tr("File has been saved."),
-			 QMessageBox::Ok);
-	}
-	else
-	{
-		QMessageBox::StandardButton ret;
-		ret = QMessageBox::warning(this, tr("Saving failure."),
-			tr("File can't be saved."),
-			QMessageBox::Ok);
-	}
-
+	QMessageBox::StandardButton ret;
+	if (!saveFile())
+		ret = QMessageBox::warning(this, tr("Saving failure."), tr("File can't be saved."), QMessageBox::Ok);
 }
 
 void PaintApp::about()
@@ -81,8 +69,6 @@ void PaintApp::createActoins()
 	aboutAct = new QAction(tr("&About"), this);
 	connect(aboutAct, SIGNAL(triggered()), SLOT(about()));
 
-	aboutQtAct = new QAction(tr("&About &Qt"), this);
-	connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(about()));
 	////////////////////////////////////////////////////////////////
 
 	cursorAct = new QAction(tr("&Cursor"), this);
@@ -103,7 +89,6 @@ void PaintApp::createActoins()
 
 void PaintApp::createMenus()
 {
-
 	fileMenu = new QMenu(tr("&File"), this);
 	fileMenu->addAction(openAct);
 	fileMenu->addAction(saveAsAct);
@@ -122,7 +107,6 @@ void PaintApp::createMenus()
 
 	helpMenu = new QMenu(tr("&Help"), this);
 	helpMenu->addAction(aboutAct);
-	helpMenu->addAction(aboutQtAct);
 
 	menuBar()->addMenu(fileMenu);
 	menuBar()->addMenu(optionMenu);

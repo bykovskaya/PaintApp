@@ -111,6 +111,11 @@ bool SRect::isSelected(QPoint cursor) const
 	return false;
 }
 
+int SRect::id()
+{
+	return 1;
+}
+
 SEllipse::SEllipse(QPoint sp, QPoint ep)
 {
 	startPoint = sp;
@@ -151,6 +156,10 @@ bool SEllipse::isSelected(QPoint cursor) const
 	return false;
 }
 
+int SEllipse::id()
+{
+	return 2;
+}
 
 STriangle::STriangle(QPoint sp, QPoint ep)
 {
@@ -163,15 +172,14 @@ STriangle::STriangle(QPoint sp)
 	startPoint = sp;
 }
 
-
 void STriangle::draw(QImage* image, QColor penColor) const
 {
 	QPainter painter(image);
 	painter.setPen(QPen(penColor, penWidth, Qt::SolidLine, Qt::RoundCap,
 		Qt::RoundJoin));
+
 	QPolygon triangle;
-	triangle << QPoint(startPoint.x(), endPoint.y()) << QPoint((endPoint.x() - startPoint.x()) / 2 + startPoint.x(), startPoint.y())
-		<< QPoint(endPoint.x(), endPoint.y());
+	triangle << QPoint(startPoint.x(), endPoint.y()) << QPoint((endPoint.x() - startPoint.x()) / 2 + startPoint.x(), startPoint.y())	<< QPoint(endPoint.x(), endPoint.y());
 	painter.drawPolygon(triangle);
 }
 
@@ -191,6 +199,11 @@ bool STriangle::isSelected(QPoint cursor) const
 			return true;
 	}
 	return false;
+}
+
+int STriangle::id()
+{
+	return 3;
 }
 
 QDataStream& operator<<(QDataStream& out, const SLine& obj)

@@ -36,7 +36,6 @@ bool ScribbleArea::openImage(const QString& fileName)
 					break;
 				case 2:
 					newShape = new SEllipse(startP, endP);
-
 					break;
 				case 3:
 					newShape = new STriangle(startP, endP);
@@ -69,44 +68,31 @@ bool ScribbleArea::openImage(const QString& fileName)
 		}
 		modified = false;
 		update();
+
 		return true;
 	}
-
 	return false;
 }
 
 bool ScribbleArea::saveImage(const QString& fileName)
 {
-	
 	QFile file(fileName);
 	QDataStream stream(&file);
 
 	if (file.open(QIODevice::WriteOnly))
 	{
 		int vectorSize= figures.size();
-		stream << vectorSize;
-		for (int i = 0; i < vectorSize; i++)
-		{
-			if (typeid(*(figures[i])) == typeid(SRect))
-			{
-				stream << 1 << *figures[i];
-			}
-			if (typeid(*(figures[i])) == typeid(SEllipse))
-			{
-				stream << 2 << *figures[i];
-			}
-			if (typeid(*(figures[i])) == typeid(STriangle))
-			{
-				stream << 3 << *figures[i];
-			}
-		}
-		vectorSize = lines.size();
-		stream << vectorSize;
-		for (int i = 0; i < vectorSize; i++)
-		{
-			stream << *lines[i];
-		}
 
+		stream << vectorSize;
+		for (int i = 0; i < vectorSize; i++)	
+			stream << figures[i]->id() << *figures[i];
+			
+		vectorSize = lines.size();
+
+		stream << vectorSize;
+		for (int i = 0; i < vectorSize; i++)
+			stream << *lines[i];
+		
 		modified = false;
 		return true;
 	}
@@ -197,7 +183,6 @@ void ScribbleArea::mousePressEvent(QMouseEvent* e)
 					break;
 				}
 			}
-
 			if (selectedShape != nullptr)
 			{
 				selectedShape->addPointPtr(startPoint);
@@ -205,7 +190,6 @@ void ScribbleArea::mousePressEvent(QMouseEvent* e)
 			}
 
 			newLine = new SLine(startPoint, endPoint);
-
 			break;
 
 		case RECT:
@@ -252,7 +236,6 @@ void ScribbleArea::mouseMoveEvent(QMouseEvent* e)
 
 		if (!figures.empty())
 			drawShapes(figures);
-
 		if (!lines.empty())
 			drawLines(lines);
 
@@ -302,7 +285,6 @@ void ScribbleArea::mouseReleaseEvent(QMouseEvent* e)
 
 		if (!figures.empty())
 			drawShapes(figures);
-
 		if (!lines.empty())
 			drawLines(lines);
 
@@ -364,3 +346,21 @@ void ScribbleArea::resizeImage(QImage* img, const QSize& newSize)
 	*img = newImage;
 }
 
+ScribbleArea::~ScribbleArea()
+{
+	if (!figures.empty())
+	{
+		for (int i = 0; i < figures.size(); i++)
+			delete figures[i];
+	}
+	if (!lines.empty())
+	{
+		for (int i = 0; i < lines.size(); i++)
+			delete lines[i];
+	}
+	if (!points.empty())
+	{
+		for (int i = 0; i < points.size(); i++)
+			delete points[i];
+	}
+}

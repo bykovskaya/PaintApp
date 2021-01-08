@@ -45,5 +45,4 @@ private :
     QAction* drawTriangleAct;
     
     QAction* aboutAct;
-    QAction* aboutQtAct;
 };

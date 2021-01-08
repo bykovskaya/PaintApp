@@ -8,27 +8,31 @@
 
 class SLine
 {
-private:
-	QPoint* startPoint;
-	QPoint* endPoint;
 public:
-	SLine(QPoint* sp, QPoint* ep): startPoint(sp), endPoint(ep){}
+	SLine(QPoint* sp, QPoint* ep) : startPoint(sp), endPoint(ep) {}
 	bool isSelected(QPoint) const;
 	void draw(QImage*, QColor) const;
 	friend QDataStream& operator<<(QDataStream& out, const SLine& obj);
 	~SLine() { }
+private:
+	QPoint* startPoint;
+	QPoint* endPoint;
 };
 
 class BaseShape
 {
 public:
 	BaseShape() {}
-	virtual void draw(QImage*, QColor)const =0;
+
+	virtual void draw(QImage*, QColor)const = 0;
 	virtual bool isSelected(QPoint) const = 0;
+	virtual int id() = 0;
+
 	void move(QPoint, QPoint);
 	void setEndPoint(QPoint);
-	void normalize(); 
+	void normalize();
 	void addPointPtr(QPoint*);
+
 	friend QDataStream& operator<<(QDataStream& out, const BaseShape& obj);
 	virtual ~BaseShape() = 0;
 protected:
@@ -44,6 +48,7 @@ public:
 	SRect(QPoint);
 	void draw(QImage*, QColor) const;
 	bool isSelected(QPoint) const;
+	int id();
 	~SRect() {}
 };
 
@@ -54,7 +59,8 @@ public:
 	SEllipse(QPoint);
 	void draw(QImage*, QColor) const;
 	bool isSelected(QPoint) const;
-	~SEllipse() {};
+	int id();
+	~SEllipse() {}
 };
 
 class STriangle : public BaseShape
@@ -64,6 +70,7 @@ public:
 	STriangle(QPoint);
 	void draw(QImage*, QColor) const;
 	bool isSelected(QPoint) const;
+	int id();
 	~STriangle() {}
 };
 
