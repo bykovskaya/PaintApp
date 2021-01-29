@@ -32,6 +32,10 @@ void BaseShape::addPointPtr(QPoint* newPoint)
 	points.push_back(newPoint);
 }
 
+BaseShape::BaseShape()
+{
+}
+
 BaseShape::~BaseShape() {}
 
 void BaseShape::normalize()
@@ -69,6 +73,8 @@ void SLine::draw(QImage* image, QColor penColor) const
 	painter.drawLine(*startPoint, *endPoint);
 }
 
+SLine::SLine(QPoint* sp, QPoint* ep):  startPoint(sp), endPoint(ep) {}
+
 bool SLine::isSelected(QPoint cursor) const
 {
 	int startX = (startPoint->x() < endPoint->x()) ? startPoint->x() : endPoint->x();
@@ -92,6 +98,8 @@ SRect::SRect(QPoint sp)
 {
 	startPoint = sp;
 }
+
+SRect::~SRect(){}
 
 void SRect::draw(QImage* image, QColor penColor) const
 {
@@ -126,6 +134,8 @@ SEllipse::SEllipse(QPoint sp)
 {
 	startPoint = sp;
 }
+
+SEllipse::~SEllipse(){}
 
 void SEllipse::draw(QImage* image, QColor penColor) const
 {
@@ -171,6 +181,8 @@ STriangle::STriangle(QPoint sp)
 {
 	startPoint = sp;
 }
+
+STriangle::~STriangle(){}
 
 void STriangle::draw(QImage* image, QColor penColor) const
 {

@@ -12,10 +12,11 @@ class ScribbleArea : public QWidget
 	Q_OBJECT
 public:
 	ScribbleArea(QWidget* parent = nullptr);
+	~ScribbleArea();
+
 	bool openImage(const QString& fileName);
 	bool saveImage(const QString& fileName);
 	bool isModified() const { return modified; }
-	~ScribbleArea();
 
 public slots:
 	void clearImg();
@@ -41,17 +42,19 @@ private:
 	SHAPE_TYPE shType;
 
 	BaseShape* selectedShape;
-
 	BaseShape* newShape;
 	std::vector<BaseShape*> figures;
+
 	SLine* newLine;
 	std::vector<SLine*> lines;
+	
 	QPoint* startPoint;
 	QPoint* endPoint;
 	std::vector<QPoint*> points;
 	
 	bool modified;
 	bool scribbling;
+
 	QColor penColor;
 	QColor selectedPenColor;
 	QImage image;

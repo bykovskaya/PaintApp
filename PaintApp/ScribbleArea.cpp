@@ -81,18 +81,18 @@ bool ScribbleArea::saveImage(const QString& fileName)
 
 	if (file.open(QIODevice::WriteOnly))
 	{
-		int vectorSize= figures.size();
+		int vectorSize = figures.size();
 
 		stream << vectorSize;
-		for (int i = 0; i < vectorSize; i++)	
+		for (int i = 0; i < vectorSize; i++)
 			stream << figures[i]->id() << *figures[i];
-			
+
 		vectorSize = lines.size();
 
 		stream << vectorSize;
 		for (int i = 0; i < vectorSize; i++)
 			stream << *lines[i];
-		
+
 		modified = false;
 		return true;
 	}
@@ -276,7 +276,8 @@ void ScribbleArea::mouseReleaseEvent(QMouseEvent* e)
 		}
 		else
 		{
-			newShape->normalize();
+			if (shType != TRIANGLE)
+				newShape->normalize();
 			figures.push_back(newShape);
 			newShape = nullptr;
 		}

@@ -27,12 +27,14 @@ private :
     void createMenus();
     bool maybeSave();
     bool saveFile(); 
+
     ScribbleArea* scrArea;
     QMenu* saveAsMenu;
     QMenu* fileMenu;
     QMenu* optionMenu;
     QMenu* drawingMenu;
     QMenu* helpMenu;
+    
     QAction* openAct;
     QAction* saveAsAct;
     QAction* exitAct;
@@ -43,6 +45,5 @@ private :
     QAction* drawRectAct;
     QAction* drawEllipseAct;
     QAction* drawTriangleAct;
-    
     QAction* aboutAct;
 };
