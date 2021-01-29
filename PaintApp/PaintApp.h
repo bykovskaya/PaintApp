@@ -19,24 +19,36 @@ protected:
 
 private slots:
     void open();
+    void saveAs();
     void save();
     void about();
 
 private :
     void createActoins();
     void createMenus();
+    void createToolbars();
     bool maybeSave();
+    bool saveAsFile(); 
     bool saveFile(); 
 
     ScribbleArea* scrArea;
-    QMenu* saveAsMenu;
+    QString openedFile;
+    
+    QToolBar* drawingToolsToolbar;
+    QPushButton* lineButton;
+    QPushButton* rectButton;
+    QPushButton* ellipseButton;
+    QPushButton* triangleButton;
+    QPushButton* cursorButton;
+
     QMenu* fileMenu;
     QMenu* optionMenu;
-    QMenu* drawingMenu;
+    //QMenu* drawingMenu;
     QMenu* helpMenu;
     
     QAction* openAct;
     QAction* saveAsAct;
+    QAction* saveAct;
     QAction* exitAct;
     QAction* clearScreenAct;
     
